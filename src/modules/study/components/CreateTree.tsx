@@ -1,4 +1,16 @@
-export default function CreateTree() {
+import type { TreeNode } from "../../../types/TreeNode";
+import TreeNodeComponent from "./TreeNodeComponent";
+
+interface CreateTreeProps {
+    onAddChild: (node: TreeNode) => void;
+    handleLabelChange: (targetNode: TreeNode, newLabel: string) => void;
+    handleDeleteNode: (targetNode: TreeNode) => void;
+    node: TreeNode;
+    level: number;
+}
+
+export default function CreateTree({node, level = 0, onAddChild, handleLabelChange, 
+                                    handleDeleteNode}: CreateTreeProps) {
     return(
         <div
         className="flex flex-col items-center px-6 py-7 shadow-md border-2 border-gray-100 rounded-lg
@@ -24,6 +36,13 @@ export default function CreateTree() {
                 Estructura de navegación
                 </h3>
             </div>
+            <TreeNodeComponent
+            node={node}
+            level={level}
+            onAddChild={onAddChild}
+            handleLabelChange={handleLabelChange}
+            handleDeleteNode={handleDeleteNode}
+            />
             <div className="w-full mt-6">
                 <h4
                 className="text-gray-600 font-semibold mb-2"

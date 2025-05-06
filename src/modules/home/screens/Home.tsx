@@ -1,15 +1,10 @@
+import { Link } from "react-router-dom"
+import Header from "../../../utils/Header"
+
 export default function Home() {
     return(
-        <div className="w-dvw h-dvh overflow-x-hidden">
-            <header 
-            className="py-5 px-4 border-b-[1px] border-b-gray-300"
-            >
-                <h1 
-                className="text-2xl font-semibold tracking-widest"
-                >
-                Tree Testing
-                </h1>
-            </header>
+        <div className="w-dvw h-dvh overflow-x-hidden lg:overflow-y-hidden">
+            <Header/>
             <main 
             className="w-full h-full flex items-center flex-col lg:justify-center py-12 px-6"
             >
@@ -17,7 +12,7 @@ export default function Home() {
                 className="flex items-center flex-col"
                 >
                     <h2
-                    className="text-6xl font-bold tracking-widest text-center mb-7"
+                    className="text-5xl font-bold tracking-widest text-center mb-7"
                     >
                     Tree Testing
                     </h2>
@@ -27,17 +22,19 @@ export default function Home() {
                     Crea tu propio estudio de Tree Testing para validar la navegación de tu sitio o app. 
                     Sin registro, sin complicaciones.
                     </p>
-                    <button
-                    className="bg-black py-2 px-4 rounded-lg flex items-center text-white 
-                            hover:text-black hover:bg-white transition-all duration-300 ease-in-out
-                            cursor-pointer"
-                    >
-                        <span
-                        className="font-semibold text-lg"
+                    <Link to={"/create"}>
+                        <button
+                        className="bg-black py-2 px-4 rounded-lg flex items-center text-white 
+                                hover:text-black hover:bg-white transition-all duration-300 ease-in-out
+                                cursor-pointer"
                         >
-                        Crear nuevo estudio
-                        </span>
-                    </button>
+                            <span
+                            className="font-semibold text-lg"
+                            >
+                            Crear nuevo estudio
+                            </span>
+                        </button>
+                    </Link>
                 </section>
                 <section 
                 className="flex gap-9 mt-20 flex-wrap justify-center"
@@ -55,7 +52,7 @@ export default function Home() {
                             />
                         </div>
                         <h3 
-                        className="text-2xl font-semibold text-center mb-2"
+                        className="text-xl font-semibold text-center mb-2"
                         >
                         Crea tu arbol
                         </h3>
@@ -78,7 +75,7 @@ export default function Home() {
                             />
                         </div>
                         <h3
-                        className="text-2xl font-semibold text-center mb-2"
+                        className="text-xl font-semibold text-center mb-2"
                         >
                         Define tareas
                         </h3>
@@ -103,7 +100,7 @@ export default function Home() {
                         </div>
                         
                         <h3
-                        className="text-2xl font-semibold text-center mb-2"
+                        className="text-xl font-semibold text-center mb-2"
                         >
                         Analiza resultados
                         </h3>

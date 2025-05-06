@@ -36,13 +36,18 @@ export default function CreateTree({node, level = 0, onAddChild, handleLabelChan
                 Estructura de navegación
                 </h3>
             </div>
-            <TreeNodeComponent
-            node={node}
-            level={level}
-            onAddChild={onAddChild}
-            handleLabelChange={handleLabelChange}
-            handleDeleteNode={handleDeleteNode}
-            />
+            <div
+            className="flex flex-col w-full shadow-sm shadow-gray-200 border-2 border-gray-200 rounded-lg
+                    py-6 px-5"
+            >
+                <TreeNodeComponent
+                node={node}
+                level={level}
+                onAddChild={onAddChild}
+                handleLabelChange={handleLabelChange}
+                handleDeleteNode={handleDeleteNode}
+                />
+            </div>
             <div className="w-full mt-6">
                 <h4
                 className="text-gray-600 font-semibold mb-2"

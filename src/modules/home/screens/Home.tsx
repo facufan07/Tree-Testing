@@ -1,6 +1,6 @@
 export default function Home() {
     return(
-        <>
+        <div className="w-dvw h-dvh overflow-x-hidden">
             <header 
             className="py-5 px-4 border-b-[1px] border-b-gray-300"
             >
@@ -11,7 +11,7 @@ export default function Home() {
                 </h1>
             </header>
             <main 
-            className="w-full flex items-center flex-col justify-center h-dvh"
+            className="w-full h-full flex items-center flex-col lg:justify-center py-12 px-6"
             >
                 <section
                 className="flex items-center flex-col"
@@ -22,71 +22,99 @@ export default function Home() {
                     Tree Testing
                     </h2>
                     <p
-                    className="text-center text-lg mb-7 font-semibold text-gray-700"
+                    className="text-center text-lg mb-7 font-semibold text-gray-700 tracking-wide"
                     >
                     Crea tu propio estudio de Tree Testing para validar la navegación de tu sitio o app. 
                     Sin registro, sin complicaciones.
                     </p>
                     <button
-                    className="bg-black py-2 px-4 rounded-lg flex items-center"
+                    className="bg-black py-2 px-4 rounded-lg flex items-center text-white 
+                            hover:text-black hover:bg-white transition-all duration-300 ease-in-out
+                            cursor-pointer"
                     >
                         <span
-                        className="text-white font-semibold text-lg"
+                        className="font-semibold text-lg"
                         >
                         Crear nuevo estudio
                         </span>
                     </button>
                 </section>
                 <section 
-                className="flex gap-4 mt-20"
+                className="flex gap-9 mt-20 flex-wrap justify-center"
                 >
                     <article
-                    className="flex flex-col items-center bg-gray-200 rounded-xl w-[250px] px-8 py-4"
+                    className="flex flex-col items-center bg-gray-200 rounded-xl w-[250px] px-8 py-6"
                     >
-                        <img src="" alt="" />
+                        <div
+                        className="bg-[#16A34A]/18 mb-4 rounded-full p-4"
+                        >
+                            <img 
+                            src="/table-green.svg" 
+                            alt="table" 
+                            className="w-7"
+                            />
+                        </div>
                         <h3 
                         className="text-2xl font-semibold text-center mb-2"
                         >
                         Crea tu arbol
                         </h3>
                         <p
-                        className="text-center text-sm text-gray-500 font-semibold"
+                        className="text-center text-md text-gray-500 font-semibold"
                         >
                         Construye facilmente tu propio arbol de navegación
                         </p>
                     </article>
                     <article
-                    className="flex flex-col items-center bg-gray-200 rounded-xl w-[250px] px-8 py-4"
+                    className="flex flex-col items-center bg-gray-200 rounded-xl w-[250px] px-8 py-6"
                     >
-                        <img src="" alt="" />
+                        <div
+                        className="bg-[#2563EB]/18 mb-4 rounded-full p-4"
+                        >
+                            <img 
+                            src="/table-blue.svg" 
+                            alt="table" 
+                            className="w-7"
+                            />
+                        </div>
                         <h3
                         className="text-2xl font-semibold text-center mb-2"
                         >
-                        Crea tu arbol
+                        Define tareas
                         </h3>
                         <p
-                        className="text-center text-sm text-gray-500 font-semibold"
+                        className="text-center text-md text-gray-500 font-semibold"
                         >
-                        Construye facilmente tu propio arbol de navegación
+                        Crea preguntas tipo "¿Dónde buscarías X?" para validar tu estructura.
                         </p>
                     </article>
                     <article
-                    className="flex flex-col items-center bg-gray-200 rounded-xl w-[250px] px-8 py-4"
+                    className="flex flex-col items-center bg-gray-200 rounded-xl w-[250px] px-8 py-6 
+                                max-lg:mb-5"
                     >
-                        <img src="" alt="" />
+                        <div
+                        className="bg-[#9333ea]/18 mb-4 rounded-full p-4"
+                        >
+                            <img 
+                            src="/metric.svg" 
+                            alt="Metric" 
+                            className="w-7"
+                            />
+                        </div>
+                        
                         <h3
                         className="text-2xl font-semibold text-center mb-2"
                         >
-                        Crea tu arbol
+                        Analiza resultados
                         </h3>
                         <p
                         className="text-center text-sm text-gray-500 font-semibold"
                         >
-                        Construye facilmente tu propio arbol de navegación
+                        Visualiza rutas elegidas, porcentajes de acierto y heatmaps de navegación.
                         </p>
                     </article>
                 </section>
             </main>
-        </>
+        </div>
     )
 }

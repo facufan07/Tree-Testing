@@ -13,7 +13,7 @@ export default function CreateTree({node, level = 0, onAddChild, handleLabelChan
                                     handleDeleteNode}: CreateTreeProps) {
     return(
         <div
-        className="flex flex-col items-center px-6 py-7 shadow-md border-2 border-gray-100 rounded-lg
+        className="flex flex-col items-center px-6 py-7
                     mt-5 max-sm:w-full"
         >
             <div
@@ -37,8 +37,8 @@ export default function CreateTree({node, level = 0, onAddChild, handleLabelChan
                 </h3>
             </div>
             <div
-            className="flex flex-col w-full shadow-sm shadow-gray-200 border-2 border-gray-200 rounded-lg
-                    py-6 px-5"
+            className="flex flex-col w-[80%] max-sm:w-[300px] shadow-sm shadow-gray-200 border-2 border-gray-200 
+            rounded-lg py-6 px-5 overflow-x-auto"
             >
                 <TreeNodeComponent
                 node={node}
@@ -48,7 +48,7 @@ export default function CreateTree({node, level = 0, onAddChild, handleLabelChan
                 handleDeleteNode={handleDeleteNode}
                 />
             </div>
-            <div className="w-full mt-6">
+            <div className="w-full mt-6 bg-gray-200 rounded-lg px-6 py-4">
                 <h4
                 className="text-gray-600 font-semibold mb-2"
                 >
@@ -61,11 +61,6 @@ export default function CreateTree({node, level = 0, onAddChild, handleLabelChan
                     className="text-gray-600 font-semibold mb-1"
                     >
                     Usa el botón + para agregar subnodos
-                    </li>
-                    <li
-                    className="text-gray-600 font-semibold mb-1"
-                    >
-                    Haz clic en las flechas para expandir/colapsar nodos
                     </li>
                     <li
                     className="text-gray-600 font-semibold"

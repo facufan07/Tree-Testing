@@ -15,7 +15,7 @@ export default function TreeNodeComponent({node, level = 0, onAddChild, handleLa
         <div
         >
             <div
-            className="flex items-center mb-3"
+            className="flex items-center mb-3 mr-5"
             style={{ paddingLeft: `${level * 50}px` }}
             >
                 <input 
@@ -24,7 +24,7 @@ export default function TreeNodeComponent({node, level = 0, onAddChild, handleLa
                 onChange={(e) => handleLabelChange(node, e.target.value)}
                 className="mr-2 outline-none border-2 border-gray-300 rounded-md px-2 py-1
                     focus:border-blue-300 focus:ring-blue-500 focus:ring-1 transition-all
-                    duration-200 w-full"
+                    duration-200"
                 />
                 <button
                 className="cursor-pointer font-bold mr-2"

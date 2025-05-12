@@ -89,7 +89,7 @@ export default function TaskComponent({task, paths, tasks, setTasks}: TaskCompon
                 </button>
 
                 <div
-                className={`absolute bg-gray-300 w-full h-[200px] bottom-[-10] rounded-lg
+                className={`absolute bg-gray-300 w-full h-[200px] bottom-[-200px] rounded-lg
                             overflow-y-auto overflow-x-auto flex flex-col items-start
                             ${isOpen ? 'block' : 'hidden'}`}
                 >

@@ -1,4 +1,23 @@
-export default function CreateTasks() {
+import { useEffect, useState } from "react"
+import type { TreeNode } from "../../../types/TreeNode";
+import type { Task } from "../../../types/Task";
+import { ShowRoutes } from "../services/ShowRoutes";
+import TaskComponent from "./TaskComponent";
+
+interface CreateTasksProps {
+    tree: TreeNode[];
+    tasks: Task[];
+    setTasks: Function;
+}
+export default function CreateTasks({ tree, tasks, setTasks }:CreateTasksProps) {
+
+    const [paths, setPaths] = useState<string[]>([]);
+
+    useEffect(()=> {
+        const extractedPaths = ShowRoutes(tree);
+        setPaths(extractedPaths);
+    }, [])
+
     return(
         <div>
             <div
@@ -21,6 +40,38 @@ export default function CreateTasks() {
                 >
                 Tareas para los participantes:
                 </h3>
+            </div>
+
+            <div>
+                {tasks.map((task, i) => (
+                    <TaskComponent
+                    key={i}
+                    task={task}
+                    paths={paths}
+                    tasks={tasks}
+                    setTasks={setTasks}
+                    />
+                ))}
+            </div>
+
+            <div
+            className="flex items-center justify-end mt-12"
+            >
+                <button
+                className="bg-black text-white px-4 py-2 rounded-lg font-semibold
+                            hover:bg-gray-800 transition-all duration-200 cursor-pointer"
+                onClick={() => {
+                    setTasks([...tasks, 
+                        {
+                            number: tasks.length + 1,
+                            description: "",
+                            correctPath: ""
+                        }
+                    ]);
+                }}
+                >
+                    Agregar tarea
+                </button>
             </div>
 
             <div className="w-full mt-6 bg-gray-200 rounded-lg px-6 py-4">

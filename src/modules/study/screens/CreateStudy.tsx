@@ -4,14 +4,15 @@ import CreateTasks from "../components/CreateTasks";
 import CreateTree from "../components/CreateTree";
 import NavBar from "../components/NavBar";
 import { useState } from "react";
+import type { Task } from "../../../types/Task";
 
 export default function CreateStudy() {
     const [tree, setTree] = useState<TreeNode[]>([
         { label: "Inicio", children: [] }
     ]);
 
-    const [tasks, setTasks] = useState([
-        {number: 1, description: "", path: ""}
+    const [tasks, setTasks] = useState<Task[]>([
+        {number: 1, description: "", correctPath: ""}
     ]);
 
     const [step, setStep] = useState(1);
@@ -90,6 +91,9 @@ export default function CreateStudy() {
                     )}
                     {step === 2 && (
                         <CreateTasks
+                        tree={tree}
+                        tasks={tasks}
+                        setTasks={setTasks}
                         />
                     )}
                     <div 
@@ -111,7 +115,7 @@ export default function CreateStudy() {
                         onClick={() => {
                             if(step === 3) return;
 
-                            setStep(step + 1)
+                            setStep(step + 1);
                         }}
                         >
                             Siguiente

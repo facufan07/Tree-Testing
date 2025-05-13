@@ -3,8 +3,9 @@ import Header from "../../../utils/Header";
 import CreateTasks from "../components/CreateTasks";
 import CreateTree from "../components/CreateTree";
 import NavBar from "../components/NavBar";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import type { Task } from "../../../types/Task";
+import ConfigExperience from "../components/ConfigExperience";
 
 export default function CreateStudy() {
     const [tree, setTree] = useState<TreeNode[]>([
@@ -16,6 +17,8 @@ export default function CreateStudy() {
     ]);
 
     const [step, setStep] = useState(1);
+
+    const scrollRef = useRef<HTMLDivElement>(null);
 
     const handleLabelChange = (targetNode: TreeNode, newLabel: string) => {
         const updateLabel = (node: TreeNode) => {
@@ -42,9 +45,19 @@ export default function CreateStudy() {
         setTree(newTree);
     };
 
+    useEffect(() => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollTo({
+                top: 0,
+                behavior: "smooth",
+            });
+        }
+    }, [step]);
+
     return(
         <div
         className="w-dvw h-dvh overflow-x-hidden"
+        ref={scrollRef}
         >
             <Header/>
             <main
@@ -52,7 +65,7 @@ export default function CreateStudy() {
             >
                 <section
                 className="sm:px-6 flex flex-col sm:items-center px-3 py-12 border-2 border-gray-200
-                            rounded-lg lg:w-[70%]"
+                            rounded-lg lg:w-[70%] overflow-x-hidden"
                 >
                     <div
                     className="w-full mb-10 justify-center flex"
@@ -96,6 +109,10 @@ export default function CreateStudy() {
                         setTasks={setTasks}
                         />
                     )}
+                    {step === 3 && (
+                        <ConfigExperience/>
+                    )}
+
                     <div 
                     className={`w-full flex ${step === 1 ? "justify-end" : "justify-between"} 
                                 items-center mt-6`}
@@ -109,17 +126,26 @@ export default function CreateStudy() {
                                 Atras
                             </button>
                         )}
-                        <button
-                        className="bg-black text-white font-semibold py-2 px-4 rounded-lg
-                                hover:text-black hover:bg-white transition duration-300 cursor-pointer"
-                        onClick={() => {
-                            if(step === 3) return;
+                        {step !== 3 ? (
+                            <button
+                            className="bg-black text-white font-semibold py-2 px-4 rounded-lg
+                                    hover:text-black hover:bg-white transition duration-300 cursor-pointer"
+                            onClick={() => {
+                                if(step === 3) return;
 
-                            setStep(step + 1);
-                        }}
-                        >
-                            Siguiente
-                        </button>
+                                setStep(step + 1);
+                            }}
+                            >
+                                Siguiente
+                            </button>
+                        ):(
+                            <button
+                            className="bg-black text-white font-semibold py-2 px-4 rounded-lg
+                                    hover:text-black hover:bg-white transition duration-300 cursor-pointer"
+                            >
+                                Crear
+                            </button>
+                        )}
                     </div>
                 </section>
             </main>

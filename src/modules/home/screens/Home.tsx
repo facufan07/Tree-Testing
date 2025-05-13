@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import Header from "../../../utils/Header"
+import "../../../animations/fadeInLeft.css"
 
 export default function Home() {
     return(
@@ -9,7 +10,7 @@ export default function Home() {
             className="w-full h-full flex items-center flex-col lg:justify-center py-12 px-6"
             >
                 <section
-                className="flex items-center flex-col"
+                className="flex items-center flex-col fadeInLeft"
                 >
                     <h2
                     className="text-5xl font-bold tracking-widest text-center mb-7"

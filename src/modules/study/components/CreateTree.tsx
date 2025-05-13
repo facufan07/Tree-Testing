@@ -1,5 +1,6 @@
 import type { TreeNode } from "../../../types/TreeNode";
 import TreeNodeComponent from "./TreeNodeComponent";
+import "../../../animations/fadeInLeft.css";
 
 interface CreateTreeProps {
     onAddChild: (node: TreeNode) => void;
@@ -14,7 +15,7 @@ export default function CreateTree({node, level = 0, onAddChild, handleLabelChan
     return(
         <div
         className="flex flex-col items-center px-6 py-7
-                    mt-5 max-sm:w-full"
+                    mt-5 max-sm:w-full fadeInLeft"
         >
             <div
             className="w-full mb-6"

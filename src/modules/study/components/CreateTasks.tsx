@@ -3,6 +3,7 @@ import type { TreeNode } from "../../../types/TreeNode";
 import type { Task } from "../../../types/Task";
 import { ShowRoutes } from "../services/ShowRoutes";
 import TaskComponent from "./TaskComponent";
+import "../../../animations/fadeInLeft.css";
 
 interface CreateTasksProps {
     tree: TreeNode[];
@@ -19,9 +20,11 @@ export default function CreateTasks({ tree, tasks, setTasks }:CreateTasksProps) 
     }, [])
 
     return(
-        <div>
+        <div
+        className="w-full px-6 py-7 fadeInLeft"
+        >
             <div
-            className="w-full mt-5"
+            className="w-full"
             >
                 <h2
                 className="tracking-widest text-2xl font-semibold mb-1 max-sm:text-xl"

@@ -9,8 +9,11 @@ interface CreateTasksProps {
     tree: TreeNode[];
     tasks: Task[];
     setTasks: Function;
+    handleTasksCorrectPathChange: Function;
+    handleTasksDescriptionChange: Function;
 }
-export default function CreateTasks({ tree, tasks, setTasks }:CreateTasksProps) {
+export default function CreateTasks({ tree, tasks, setTasks, handleTasksCorrectPathChange, 
+                                    handleTasksDescriptionChange  }:CreateTasksProps) {
 
     const [paths, setPaths] = useState<string[]>([]);
 
@@ -53,6 +56,8 @@ export default function CreateTasks({ tree, tasks, setTasks }:CreateTasksProps) 
                     paths={paths}
                     tasks={tasks}
                     setTasks={setTasks}
+                    handleTasksCorrectPathChange={handleTasksCorrectPathChange}
+                    handleTasksDescriptionChange={handleTasksDescriptionChange}
                     />
                 ))}
             </div>

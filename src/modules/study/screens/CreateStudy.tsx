@@ -34,6 +34,30 @@ export default function CreateStudy() {
         setTree(newTree);
     }
 
+    const handleTasksDescriptionChange = (taskChanged: Task, description: string) => {
+        const newTasks = [...tasks];
+
+        newTasks.forEach((task: Task) => {
+            if(task.number === taskChanged.number){
+                task.description = description;
+            }
+        })
+
+        setTasks(newTasks);
+    }
+
+    const handleTasksCorrectPathChange = (taskChanged: Task, correctPath: string) => {
+        const newTasks = [...tasks];
+
+        newTasks.forEach((task: Task) => {
+            if(task.number === taskChanged.number){
+                task.correctPath = correctPath;
+            }
+        })
+
+        setTasks(newTasks);
+    }
+
     const handleDeleteNode = (targetNode: TreeNode) => {
         const deleteNode = (node: TreeNode): void => {
             node.children = node.children.filter(child => child !== targetNode);
@@ -107,6 +131,8 @@ export default function CreateStudy() {
                         tree={tree}
                         tasks={tasks}
                         setTasks={setTasks}
+                        handleTasksDescriptionChange={handleTasksDescriptionChange}
+                        handleTasksCorrectPathChange={handleTasksCorrectPathChange}
                         />
                     )}
                     {step === 3 && (

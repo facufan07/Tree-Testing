@@ -6,9 +6,12 @@ interface TaskComponentProps {
     paths: string[];
     tasks: Task[];
     setTasks: Function;
+    handleTasksCorrectPathChange: Function;
+    handleTasksDescriptionChange: Function;
 }
 
-export default function TaskComponent({task, paths, tasks, setTasks}: TaskComponentProps) {
+export default function TaskComponent({task, paths, tasks, setTasks, handleTasksCorrectPathChange, 
+                                        handleTasksDescriptionChange}: TaskComponentProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [selectedPath, setSelectedPath] = useState<string>("Selecciona una ruta");
 
@@ -59,6 +62,8 @@ export default function TaskComponent({task, paths, tasks, setTasks}: TaskCompon
                 className="border-2 rounded-lg px-3 py-2 font-semibold outline-none 
                         focus:border-blue-500 transition-all duration-200"
                 placeholder="¿Donde buscarias información sobre...?"
+                onChange={(e) => handleTasksDescriptionChange(task, e.target.value)}
+                value={task.description}
                 />
             </div>
 
@@ -74,12 +79,12 @@ export default function TaskComponent({task, paths, tasks, setTasks}: TaskCompon
                 className="flex items-center justify-between w-full cursor-pointer 
                             border-2 px-4 py-2 rounded-lg mt-4 hover:bg-gray-200 transition-all duration-200"
                 onClick={() => setIsOpen(!isOpen)}
-                title={selectedPath}
+                title={task.correctPath === "" ? selectedPath : task.correctPath}
                 >
                     <span
                     className="font-semibold text-gray-500 truncate"
                     >
-                    {selectedPath}
+                    {task.correctPath === "" ? selectedPath : task.correctPath}
                     </span>
                     <img 
                     src="/arrow-down.svg" 
@@ -101,6 +106,7 @@ export default function TaskComponent({task, paths, tasks, setTasks}: TaskCompon
                         onClick={() => {
                             setSelectedPath(path);
                             setIsOpen(false);
+                            handleTasksCorrectPathChange(task, path);
                         }}
                         >
                             <span

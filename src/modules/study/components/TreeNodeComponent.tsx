@@ -29,6 +29,7 @@ export default function TreeNodeComponent({node, level = 0, onAddChild, handleLa
                 <button
                 className="cursor-pointer font-bold mr-2"
                 onClick={() => onAddChild(node)}
+                type="button"
                 >
                     +
                 </button>
@@ -36,6 +37,7 @@ export default function TreeNodeComponent({node, level = 0, onAddChild, handleLa
                     <button
                     onClick={() => handleDeleteNode(node)}
                     className="cursor-pointer"
+                    type="button"
                     >
                         🗑
                     </button>

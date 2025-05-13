@@ -77,6 +77,7 @@ export default function CreateTasks({ tree, tasks, setTasks, handleTasksCorrectP
                         }
                     ]);
                 }}
+                type="button"
                 >
                     Agregar tarea
                 </button>

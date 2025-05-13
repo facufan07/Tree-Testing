@@ -1,6 +1,18 @@
 import "../../../animations/fadeInLeft.css";
+interface ConfigExperienceProps {
+    welcomeMessage: string;
+    finalMessage: string;
+    setWelcomeMessage: Function;
+    setFinalMessage: Function;
+    maxResponds: number;
+    setMaxResponds: Function;
+    closeDate: Date;
+    setCloseDate: Function;
+}
 
-export default function ConfigExperience() {
+export default function ConfigExperience({ welcomeMessage, finalMessage, setWelcomeMessage, 
+                                        setFinalMessage, maxResponds, setMaxResponds, closeDate, 
+                                        setCloseDate }: ConfigExperienceProps) {
     return(
         <div
         className="w-full px-6 py-7 fadeInLeft"
@@ -33,7 +45,8 @@ export default function ConfigExperience() {
                 id=""
                 className="w-full bg-gray-300 rounded-lg px-6 py-4 outline-none
                             font-semibold tracking-widest text-sm"
-                placeholder="¡Bienvenido! Tu opinión es muy importante para nosotros."
+                value={welcomeMessage}
+                onChange={(e) => setWelcomeMessage(e.target.value)}
                 >
                 </textarea>
             </div>
@@ -50,7 +63,8 @@ export default function ConfigExperience() {
                 id=""
                 className="w-full bg-gray-300 rounded-lg px-6 py-4 outline-none
                             font-semibold tracking-widest text-sm"
-                placeholder="¡Gracias por participar! Tu opinión es muy importante para nosotros."
+                value={finalMessage}
+                onChange={(e) => setFinalMessage(e.target.value)}
                 >
                 </textarea>
             </div>
@@ -70,6 +84,8 @@ export default function ConfigExperience() {
                             tracking-widest text-sm"
                     max={100}
                     min={1}
+                    value={maxResponds}
+                    onChange={(e) => setMaxResponds(parseInt(e.target.value))}
                     />
                 </div>
                 <div>
@@ -82,6 +98,9 @@ export default function ConfigExperience() {
                     type="date" 
                     className="outline-none bg-gray-300 rounded-lg px-3 py-2 w-full font-semibold
                                 tracking-widest text-sm"
+                    value={closeDate.toISOString().split('T')[0]}
+                    onChange={(e) => setCloseDate(new Date(e.target.value))}
+                    min={new Date().toISOString().split("T")[0]}
                     />
                 </div>
             </div>

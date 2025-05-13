@@ -44,6 +44,7 @@ export default function TaskComponent({task, paths, tasks, setTasks, handleTasks
                     <button
                     className="cursor-pointer"
                     onClick={handleDeleteTask}
+                    type="button"
                     >
                         🗑
                     </button>
@@ -80,6 +81,7 @@ export default function TaskComponent({task, paths, tasks, setTasks, handleTasks
                             border-2 px-4 py-2 rounded-lg mt-4 hover:bg-gray-200 transition-all duration-200"
                 onClick={() => setIsOpen(!isOpen)}
                 title={task.correctPath === "" ? selectedPath : task.correctPath}
+                type="button"
                 >
                     <span
                     className="font-semibold text-gray-500 truncate"
@@ -108,6 +110,7 @@ export default function TaskComponent({task, paths, tasks, setTasks, handleTasks
                             setIsOpen(false);
                             handleTasksCorrectPathChange(task, path);
                         }}
+                        type="button"
                         >
                             <span
                             className="font-semibold tracking-wider"

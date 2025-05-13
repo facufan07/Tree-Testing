@@ -16,6 +16,18 @@ export default function CreateStudy() {
         {number: 1, description: "", correctPath: ""}
     ]);
 
+    const [welcomeMessage, setWelcomeMessage] = useState<string>(
+        "¡Bienvenido! Tu opinión es muy importante para nosotros."
+    );
+
+    const [finalMessage, setFinalMessage] = useState<string>(
+        "¡Gracias por participar! Tu opinión es muy importante para nosotros."
+    );
+
+    const [maxResponds, setMaxResponds] = useState<number>(1);
+
+    const [closeDate, setCloseDate] = useState<Date>(new Date());
+
     const [step, setStep] = useState(1);
 
     const scrollRef = useRef<HTMLDivElement>(null);
@@ -87,7 +99,7 @@ export default function CreateStudy() {
             <main
             className="flex justify-center py-12"
             >
-                <section
+                <form
                 className="sm:px-6 flex flex-col sm:items-center px-3 py-12 border-2 border-gray-200
                             rounded-lg lg:w-[70%] overflow-x-hidden"
                 >
@@ -136,7 +148,16 @@ export default function CreateStudy() {
                         />
                     )}
                     {step === 3 && (
-                        <ConfigExperience/>
+                        <ConfigExperience
+                        welcomeMessage={welcomeMessage}
+                        setWelcomeMessage={setWelcomeMessage}
+                        finalMessage={finalMessage}
+                        setFinalMessage={setFinalMessage}
+                        maxResponds={maxResponds}
+                        setMaxResponds={setMaxResponds}
+                        closeDate={closeDate}
+                        setCloseDate={setCloseDate}
+                        />
                     )}
 
                     <div 
@@ -148,6 +169,7 @@ export default function CreateStudy() {
                             className="font-semibold py-2 px-4 rounded-lg border
                                     hover:text-white hover:bg-black transition duration-300 cursor-pointer"
                             onClick={() => setStep(step - 1)}
+                            type="button"
                             >
                                 Atras
                             </button>
@@ -156,11 +178,13 @@ export default function CreateStudy() {
                             <button
                             className="bg-black text-white font-semibold py-2 px-4 rounded-lg
                                     hover:text-black hover:bg-white transition duration-300 cursor-pointer"
-                            onClick={() => {
+                            onClick={(e) => {
+                                e.preventDefault();
                                 if(step === 3) return;
 
                                 setStep(step + 1);
                             }}
+                            type="button"
                             >
                                 Siguiente
                             </button>
@@ -168,12 +192,13 @@ export default function CreateStudy() {
                             <button
                             className="bg-black text-white font-semibold py-2 px-4 rounded-lg
                                     hover:text-black hover:bg-white transition duration-300 cursor-pointer"
+                            type="submit"
                             >
                                 Crear
                             </button>
                         )}
                     </div>
-                </section>
+                </form>
             </main>
         </div>
     )

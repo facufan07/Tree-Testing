@@ -6,6 +6,9 @@ import NavBar from "../components/NavBar";
 import { useState, useRef, useEffect } from "react";
 import type { Task } from "../../../types/Task";
 import ConfigExperience from "../components/ConfigExperience";
+import { ReqCreateStudy } from "../services/ReqCreateStudy";
+import { ShowRoutes } from "../services/ShowRoutes";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateStudy() {
     const [tree, setTree] = useState<TreeNode[]>([
@@ -31,6 +34,8 @@ export default function CreateStudy() {
     const [step, setStep] = useState(1);
 
     const scrollRef = useRef<HTMLDivElement>(null);
+
+    const navigate = useNavigate();
 
     const handleLabelChange = (targetNode: TreeNode, newLabel: string) => {
         const updateLabel = (node: TreeNode) => {
@@ -81,6 +86,19 @@ export default function CreateStudy() {
         setTree(newTree);
     };
 
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        const res = await ReqCreateStudy(tasks, ShowRoutes(tree),welcomeMessage,maxResponds, closeDate, finalMessage);
+        
+        if (res === false){
+            alert("Ha ocurrido un error al crear el estudio.");
+            return;
+        }
+        
+        navigate(`/study/${res}`);
+    }
+
     useEffect(() => {
         if (scrollRef.current) {
             scrollRef.current.scrollTo({
@@ -102,6 +120,7 @@ export default function CreateStudy() {
                 <form
                 className="sm:px-6 flex flex-col sm:items-center px-3 py-12 border-2 border-gray-200
                             rounded-lg lg:w-[70%] overflow-x-hidden"
+                onSubmit={handleSubmit}
                 >
                     <div
                     className="w-full mb-10 justify-center flex"

@@ -6,14 +6,14 @@ import {
 import { useEffect, useState } from "react";
 
 import { useParams } from "react-router-dom";
-import { ReqGetStudy } from "../services/ReqGetStudy";
-import type { StudyInfo } from "../../../types/StudyInfo";
+import { ReqGetStudyResult } from "../services/ReqGetStudyResult";
+import type { StudyInfoResult } from "../../../types/StudyInfoResult";
 import SuccessRate from "../components/SuccessRate";
 
 
 export default function ResultsStudy() {
 
-    const [study, setStudy] = useState<StudyInfo>({
+    const [study, setStudy] = useState<StudyInfoResult>({
         welcomeMessage: "",
         finalMessage: "",
         isEnabled: false,
@@ -26,7 +26,7 @@ export default function ResultsStudy() {
 
     useEffect(() => {
         async function getStudy() {
-            const res = await ReqGetStudy(`${studyId}`);
+            const res = await ReqGetStudyResult(`${studyId}`);
 
             if (res !== false) {
                 setStudy(res);
@@ -86,10 +86,14 @@ export default function ResultsStudy() {
                         >
                         Análisis detallado de las respuestas de los participantes para cada tarea.
                         </p>
-                        <SuccessRate
-                        rate={50}
-                        taskNumber={1}
-                        />
+                        {study.tasks.map((task, i) => (
+                            <SuccessRate
+                            key={i}
+                            rate={task.rate}
+                            taskNumber={task.number}
+                            />
+                        ))}
+                        
                     </div>
                     <div
                     className="w-full border-2 border-gray-300 mt-4 p-5 rounded-lg"

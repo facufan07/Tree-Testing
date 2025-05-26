@@ -1,10 +1,10 @@
-import type { TaskBD } from "./TaskBD";
+import type { TaskResult } from "./TaskResult";
 
-export interface StudyInfo {
+export interface StudyInfoResult {
     welcomeMessage: string;
     finalMessage: string;
     isEnabled: boolean;
     participants: number;
     paths: string[];
-    tasks: TaskBD[];
+    tasks: TaskResult[];
 }

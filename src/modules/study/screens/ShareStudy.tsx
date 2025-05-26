@@ -3,6 +3,8 @@ import Header from "../../../utils/Header";
 import { ReqGetStudyShare } from "../services/ReqGetStudyShare";
 import { useParams } from "react-router-dom";
 import type { StudyInfoShare } from "../../../types/StudyInfoShare";
+import type { TaskShare } from "../../../types/TaskShare";
+import SelectComponent from "../components/SelectComponent";
 
 
 export default function ShareStudy() {
@@ -14,8 +16,15 @@ export default function ShareStudy() {
         tasks: []
     });
 
-    const [pages, setPages] = useState<number>(0);
+    const [maxPages, setMaxPages] = useState<number>(0);
+    const [currentPage, setCurrentPage] = useState<number>(0);
+    const [currentTask, setCurrentTask] = useState<TaskShare>({
+        id: 0,
+        number: 0,
+        description: "",
+    });
     const [isStarted, setIsStarted] = useState<boolean>(true);
+    const [selectedPath, setSelectedPath] = useState<string>("Selecciona una ruta");
 
     const { studyId } = useParams();
 
@@ -25,23 +34,36 @@ export default function ShareStudy() {
 
             if (res !== false) {
                 setStudy(res);
-                setPages(res.tasks.length);
+                setMaxPages(res.tasks.length);
             }
             console.log(res);
         }
         getStudy(); 
     }, [])
+
+    function handleStartStudy(){
+        setIsStarted(false);
+        setCurrentTask(study.tasks[0]);
+    }
+
+    function handleNextTask() {
+        if(currentPage < maxPages - 1) {
+            setCurrentPage(currentPage + 1);
+            setCurrentTask(study.tasks[currentPage + 1]);
+        }
+    }
     return (
         <div>
             <Header/>
             <main
-            className="flex justify-center py-12"
+            className="flex justify-center py-12 items-center"
             >
                 <section
-                className="sm:px-6 flex flex-col sm:items-center px-3 py-12 border-2 border-gray-200
-                            rounded-lg lg:w-[70%] overflow-x-hidden"
+                className={`sm:px-6 flex flex-col sm:items-center px-3 py-12 border-2 border-gray-200
+                            rounded-lg lg:w-[70%] overflow-x-hidden min-h-[420px] 
+                            ${isStarted ? "justify-center items-center" : ""}`}
                 >
-                    {isStarted && (
+                    {isStarted ? (
                         <div
                         className="w-full"
                         >
@@ -71,7 +93,7 @@ export default function ShareStudy() {
                             <button
                             className="bg-black w-full rounded-lg py-2 cursor-pointer
                                         hover:bg-gray-800 transition-colors duration-300"
-                            onClick={() => setIsStarted(false)}
+                            onClick={handleStartStudy}
                             >
                                 <span
                                 className="text-white font-semibold text-lg tracking-widest
@@ -79,6 +101,35 @@ export default function ShareStudy() {
                                 >
                                 Comenzar
                                 </span>
+                            </button>
+                        </div>
+                    ):(
+                        <div
+                        className="w-full"
+                        >
+                            <h2
+                            className="text-center font-semibold text-3xl tracking-widest mb-4"
+                            >
+                            Tarea {currentTask.number}
+                            </h2>
+                            <p
+                            className="font-semibold text-gray-700 text-center mb-10 text-xl"
+                            >
+                            {currentTask.description}
+                            </p>
+                            <SelectComponent
+                            paths={study.paths}
+                            selectedPath={selectedPath}
+                            setSelectedPath={setSelectedPath}
+                            />
+                            <button
+                            className="bg-black w-full rounded-lg py-2 cursor-pointer
+                                        hover:bg-gray-800 transition-colors duration-300
+                                        text-white font-semibold text-lg tracking-widest
+                                        text-center mt-[150px]"
+                            onClick={handleNextTask}
+                            >
+                                Continuar
                             </button>
                         </div>
                     )}

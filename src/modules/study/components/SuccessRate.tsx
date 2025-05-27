@@ -4,7 +4,7 @@ interface SuccessRateProps {
 }
 export default function SuccessRate({rate, taskNumber}: SuccessRateProps) {
     return (
-        <div className="w-full">
+        <div className="w-full mt-8">
             <div
             className="flex justify-between mb-2"
             >

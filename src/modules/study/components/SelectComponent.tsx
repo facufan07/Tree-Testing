@@ -4,12 +4,14 @@ interface SelectComponentProps {
     paths: string[];
     selectedPath: string;
     setSelectedPath: (path: string) => void;
+    setIsSelected: Function;
 }
 
 export default function SelectComponent({
     paths,
     selectedPath,
     setSelectedPath,
+    setIsSelected
 }: SelectComponentProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -48,6 +50,7 @@ export default function SelectComponent({
                         onClick={() => {
                             setSelectedPath(path);
                             setIsOpen(false);
+                            setIsSelected(true);
                         }}
                         type="button"
                         >

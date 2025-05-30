@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import Header from "../../../utils/Header"
+import Header from "../../../layout/Header"
 import "../../../animations/fadeInLeft.css"
 
 export default function Home() {

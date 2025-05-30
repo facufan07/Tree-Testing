@@ -1,5 +1,5 @@
 import type { TreeNode } from "../../../types/TreeNode";
-import Header from "../../../utils/Header";
+import Header from "../../../layout/Header";
 import CreateTasks from "../components/CreateTasks";
 import CreateTree from "../components/CreateTree";
 import NavBar from "../components/NavBar";
@@ -9,6 +9,7 @@ import ConfigExperience from "../components/ConfigExperience";
 import { ReqCreateStudy } from "../services/ReqCreateStudy";
 import { ShowRoutes } from "../services/ShowRoutes";
 import { useNavigate } from "react-router-dom";
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function CreateStudy() {
     const [tree, setTree] = useState<TreeNode[]>([
@@ -32,6 +33,8 @@ export default function CreateStudy() {
     const [closeDate, setCloseDate] = useState<Date>(new Date());
 
     const [step, setStep] = useState(1);
+
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -86,8 +89,20 @@ export default function CreateStudy() {
         setTree(newTree);
     };
 
+    const handleNextStep = (e: React.FormEvent) => {
+        e.preventDefault();
+        if(step === 3) return;
+
+        if (tasks.some((task) => (task.description === "" || task.correctPath === "") && step === 2)) {
+            alert("Por favor, completa todas las tareas antes de continuar.");
+            return;
+        }
+        setStep(step + 1);
+    }
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setIsLoading(true);
 
         const res = await ReqCreateStudy(tasks, ShowRoutes(tree),welcomeMessage,maxResponds, closeDate, finalMessage);
         
@@ -107,6 +122,16 @@ export default function CreateStudy() {
             });
         }
     }, [step]);
+
+    if(isLoading){
+        return (
+            <div
+            className="w-dvw h-dvh flex items-center justify-center"
+            >
+                <CircularProgress color="inherit" />
+            </div>
+        )
+    }
 
     return(
         <div
@@ -197,12 +222,7 @@ export default function CreateStudy() {
                             <button
                             className="bg-black text-white font-semibold py-2 px-4 rounded-lg
                                     hover:text-black hover:bg-white transition duration-300 cursor-pointer"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                if(step === 3) return;
-
-                                setStep(step + 1);
-                            }}
+                            onClick={handleNextStep}
                             type="button"
                             >
                                 Siguiente

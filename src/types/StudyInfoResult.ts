@@ -7,4 +7,5 @@ export interface StudyInfoResult {
     participants: number;
     paths: string[];
     tasks: TaskResult[];
+    secret: string;
 }

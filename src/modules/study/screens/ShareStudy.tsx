@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Header from "../../../utils/Header";
+import Header from "../../../layout/Header";
 import { ReqGetStudyShare } from "../services/ReqGetStudyShare";
 import { useParams } from "react-router-dom";
 import type { StudyInfoShare } from "../../../types/StudyInfoShare";
@@ -9,6 +9,7 @@ import type { Response } from "../../../types/Response";
 import { ReqSaveResponses } from "../services/ReqSaveResponses";
 import CircularProgress from '@mui/material/CircularProgress';
 import "../../../animations/fadeInLeft.css";
+import EmailVerifier from "../components/EmailVerifier";
 
 export default function ShareStudy() {
     const [study, setStudy] = useState<StudyInfoShare>({
@@ -29,6 +30,7 @@ export default function ShareStudy() {
         description: "",
     });
     const [isStarted, setIsStarted] = useState<boolean>(true);
+    const [isFinished, setIsFinished] = useState<boolean>(false);
     const [isSelected, setIsSelected] = useState<boolean>(false);
     const [selectedPath, setSelectedPath] = useState<string>("Selecciona una ruta");
     const [loading, setLoading] = useState<boolean>(true);
@@ -75,6 +77,30 @@ export default function ShareStudy() {
         console.log(res);
     }
 
+    if(loading) {
+        return (
+            <div
+            className="w-dvw h-dvh flex items-center justify-center"
+            >
+                <CircularProgress color="inherit" />
+            </div>
+        )
+    }
+
+    if(study.isEnabled === false) {
+        return (
+            <div
+            className="w-dvw h-dvh flex items-center justify-center"
+            >
+                <h1
+                className="text-2xl font-semibold tracking-widest"
+                >
+                Este estudio a finalizado.
+                </h1>
+            </div>
+        )
+    }
+
     return (
         <div
         className="overflow-x-hidden"
@@ -83,63 +109,63 @@ export default function ShareStudy() {
             <main
             className="flex justify-center py-12 items-center"
             >
-                {loading ? (
-                    <div className="w-full h-full flex items-center justify-center">
-                        <CircularProgress color="inherit" />
-                    </div>
-                ) : (
-
-                    <section
-                    className={`sm:px-6 flex flex-col sm:items-center px-3 py-12 border-2 border-gray-200
-                                rounded-lg lg:w-[70%] overflow-x-hidden min-h-[420px] 
-                                ${isStarted ? "justify-center items-center" : ""} fadeInLeft
-                                overflow-x-hidden`}
-                    >
-                        {isStarted ? (
-                            <div
-                            className="w-full"
+                <section
+                className={`sm:px-6 flex flex-col sm:items-center px-3 py-12 border-2 border-gray-200
+                            rounded-lg lg:w-[70%] overflow-x-hidden min-h-[420px] 
+                            ${isStarted ? "justify-center items-center" : ""} fadeInLeft
+                            overflow-x-hidden`}
+                >
+                    {isStarted ? (
+                        <div
+                        className="w-full"
+                        >
+                            <h2
+                            className="text-center font-semibold text-3xl tracking-widest mb-4"
                             >
-                                <h2
-                                className="text-center font-semibold text-3xl tracking-widest mb-4"
-                                >
-                                ¡Bienvenido al estudio!
-                                </h2>
-                                <p
-                                className="font-semibold text-gray-700 text-center mb-4 text-xl"
-                                >
-                                {study.welcomeMessage}
-                                </p>
-                                <p
-                                className="text-gray-500 text-center mb-4 font-semibold"
-                                >
-                                En este estudio, se te presentarán varias tareas. Para cada tarea, 
-                                navega por la estructura de menú hasta encontrar donde crees que está 
-                                la información solicitada.
-                                </p>
-                                <p
-                                className="text-gray-500 text-center mb-10 font-semibold"
-                                >
-                                No hay respuestas correctas o incorrectas. Estamos evaluando la estructura, 
-                                no a ti.
-                                </p>
-                                <button
-                                className="bg-black w-full rounded-lg py-2 cursor-pointer
-                                            hover:bg-gray-800 transition-colors duration-300"
-                                onClick={handleStartStudy}
-                                >
-                                    <span
-                                    className="text-white font-semibold text-lg tracking-widest
-                                                text-center"
-                                    >
-                                    Comenzar
-                                    </span>
-                                </button>
-                            </div>
-                        ):(
-                            <form
-                            className="w-full fadeInLeft"
-                            onSubmit={handleSubmit}
+                            ¡Bienvenido al estudio!
+                            </h2>
+                            <p
+                            className="font-semibold text-gray-700 text-center mb-4 text-xl"
                             >
+                            {study.welcomeMessage}
+                            </p>
+                            <p
+                            className="text-gray-500 text-center mb-4 font-semibold"
+                            >
+                            En este estudio, se te presentarán varias tareas. Para cada tarea, 
+                            navega por la estructura de menú hasta encontrar donde crees que está 
+                            la información solicitada.
+                            </p>
+                            <p
+                            className="text-gray-500 text-center mb-10 font-semibold"
+                            >
+                            No hay respuestas correctas o incorrectas. Estamos evaluando la estructura, 
+                            no a ti.
+                            </p>
+                            <button
+                            className="bg-black w-full rounded-lg py-2 cursor-pointer
+                                        hover:bg-gray-800 transition-colors duration-300"
+                            onClick={handleStartStudy}
+                            >
+                                <span
+                                className="text-white font-semibold text-lg tracking-widest
+                                            text-center"
+                                >
+                                Comenzar
+                                </span>
+                            </button>
+                        </div>
+                    ):(
+                        <form
+                        className="w-full fadeInLeft h-full"
+                        onSubmit={handleSubmit}
+                        >
+                            {isFinished ? (
+                                <EmailVerifier
+                                studyId={`${studyId}`}
+                                />
+                            ):(
+                                <>
                                 <h2
                                 className="text-center font-semibold text-3xl tracking-widest mb-4"
                                 >
@@ -165,7 +191,8 @@ export default function ShareStudy() {
                                                 ${!isSelected ? "cursor-not-allowed bg-gray-500" : 
                                                 "cursor-pointer bg-black hover:bg-gray-800"}`}
                                     disabled={!isSelected}
-                                    type="submit"
+                                    type="button"
+                                    onClick={() => setIsFinished(true)}
                                     >
                                         Finalizar estudio
                                     </button>
@@ -183,11 +210,15 @@ export default function ShareStudy() {
                                     >
                                         Continuar
                                     </button>
+                                
                                 )}
-                            </form>
-                        )}
-                    </section>
-                )}
+                                </>
+                            )}
+                            
+                        </form>
+                    )}
+                </section>
+                
             </main>
         </div>
     )

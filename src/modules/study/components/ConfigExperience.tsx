@@ -86,6 +86,11 @@ export default function ConfigExperience({ welcomeMessage, finalMessage, setWelc
                     min={1}
                     value={maxResponds}
                     onChange={(e) => setMaxResponds(parseInt(e.target.value))}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                            e.preventDefault();
+                        }
+                    }}
                     />
                 </div>
                 <div>

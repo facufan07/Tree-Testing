@@ -65,6 +65,11 @@ export default function TaskComponent({task, paths, tasks, setTasks, handleTasks
                 placeholder="¿Donde buscarias información sobre...?"
                 onChange={(e) => handleTasksDescriptionChange(task, e.target.value)}
                 value={task.description}
+                onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                    }
+                }}
                 />
             </div>
 

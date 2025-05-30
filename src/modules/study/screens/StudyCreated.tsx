@@ -1,15 +1,17 @@
 import { useParams } from "react-router-dom"
-import Header from "../../../utils/Header";
+import Header from "../../../layout/Header";
 import { useState } from "react";
+import "../../../animations/fadeInLeft.css"
 
 export default function StudyCreated() {
 
     const { studyId } = useParams();
     const [isCopied, setIsCopied] = useState(false);
     const [isCopied2, setIsCopied2] = useState(false);
-
-    const shareLink = `https://tree-testing.vercel.app/study/share/${studyId}`
-    const resultsLink = `https://tree-testing.vercel.app/study/result/${studyId}`
+    const frontendUrl = import.meta.env.VITE_FRONTEND_URL;
+    const id = studyId?.split("_")[0];
+    const shareLink = `${frontendUrl}/study/share/${id}`
+    const resultsLink = `${frontendUrl}/study/result/${studyId}`
 
     const copy = (link:string) => {
         navigator.clipboard.writeText(link);
@@ -37,7 +39,7 @@ export default function StudyCreated() {
         >
             <section
             className="sm:px-6 flex flex-col sm:items-center px-3 py-12 border-2 border-gray-200
-                        rounded-lg lg:w-[70%] overflow-x-hidden"
+                        rounded-lg lg:w-[70%] overflow-x-hidden fadeInLeft"
             >
                 <div
                 className="flex flex-col items-center"
@@ -93,7 +95,8 @@ export default function StudyCreated() {
                     className="flex justify-center gap-4 items-center"
                     >
                         <div
-                        className="border-2 border-gray-300 rounded-md px-4 py-2 max-sm:w-[200px]"
+                        className="border-2 border-gray-300 rounded-md px-4 py-2 max-sm:w-[200px] 
+                                    sm:w-[600px]"
                         >
                             <p
                             className="font-semibold tracking-wide truncate"
@@ -143,7 +146,8 @@ export default function StudyCreated() {
                     className="flex justify-center gap-4 items-center"
                     >
                         <div
-                        className="border-2 border-gray-300 rounded-md px-4 py-2 max-sm:w-[200px]"
+                        className="border-2 border-gray-300 rounded-md px-4 py-2 max-sm:w-[200px]
+                                    sm:w-[600px]"
                         >
                             <p
                             className="font-semibold tracking-wide truncate"

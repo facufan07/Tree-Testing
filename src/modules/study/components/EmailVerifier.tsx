@@ -118,6 +118,7 @@ export default function EmailVerifier({studyId}: EmailVerifierProps) {
                     className="bg-black text-white px-6 py-2 rounded-lg font-semibold cursor-pointer
                             hover:bg-gray-800 transition-all duration-200 mx-auto block"
                     onClick={handleConfirmCode}
+                    type="submit"
                     >
                     Confirmar
                     </button>

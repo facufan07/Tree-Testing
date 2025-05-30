@@ -74,7 +74,11 @@ export default function ShareStudy() {
         setResponses(newResponses);
 
         const res = await ReqSaveResponses(newResponses);
-        console.log(res);
+        if(res){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     if(loading) {
@@ -163,6 +167,7 @@ export default function ShareStudy() {
                             {isFinished ? (
                                 <EmailVerifier
                                 studyId={`${studyId}`}
+                                handleSubmit={handleSubmit}
                                 />
                             ):(
                                 <>

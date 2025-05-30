@@ -6,9 +6,10 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 interface EmailVerifierProps {
     studyId: string;
+    handleSubmit: Function;
 }
 
-export default function EmailVerifier({studyId}: EmailVerifierProps) {
+export default function EmailVerifier({studyId, handleSubmit}: EmailVerifierProps) {
 
     async function handleSendMail(){
         setIsLoading(true);
@@ -28,7 +29,10 @@ export default function EmailVerifier({studyId}: EmailVerifierProps) {
         const res = await ReqSendCode(code, studyId, mail);
 
         if (res){
-            setStep(3);
+            if(handleSubmit()){
+                setStep(3);
+            }
+            
         }
         else {
             alert("Error con el codigo. Por favor, inténtalo de nuevo.");

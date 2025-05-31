@@ -3,13 +3,21 @@ import "../../../animations/fadeInLeft.css"
 import { ReqSendMail } from "../services/ReqSendMail"
 import { ReqSendCode } from "../services/ReqSendCode";
 import CircularProgress from '@mui/material/CircularProgress';
+import { ReqSaveResponses } from "../services/ReqSaveResponses";
+import type { TaskShare } from "../../../types/TaskShare";
+import type { Response } from "../../../types/Response";
 
 interface EmailVerifierProps {
     studyId: string;
-    handleSubmit: Function;
+    setIsSelected: Function;
+    responses: Response[];
+    setResponses: Function;
+    currentTask: TaskShare;
+    selectedPath: string;
 }
 
-export default function EmailVerifier({studyId, handleSubmit}: EmailVerifierProps) {
+export default function EmailVerifier({studyId, setIsSelected, responses,
+                                        setResponses, currentTask, selectedPath}: EmailVerifierProps) {
 
     async function handleSendMail(){
         setIsLoading(true);
@@ -24,17 +32,24 @@ export default function EmailVerifier({studyId, handleSubmit}: EmailVerifierProp
         setIsLoading(false);
     }
 
-    async function handleConfirmCode(){
+    async function handleSubmit(e:React.FormEvent) {
+        e.preventDefault();
         setIsLoading(true);
-        const res = await ReqSendCode(code, studyId, mail);
+        setIsSelected(false)
+        const newResponses = [...responses, { taskId: currentTask.id, path: selectedPath }];
+        setResponses(newResponses);
+        const resCode = await ReqSendCode(code, studyId, mail);
+        if(resCode !== false){
+            const resResponses = await ReqSaveResponses(newResponses);
 
-        if (res){
-            if(handleSubmit()){
+            if(resResponses !== false){
                 setStep(3);
             }
-            
+            else{
+                alert("Error al enviar las respuestas. Por favor, inténtalo de nuevo.");
+            }
         }
-        else {
+        else{
             alert("Error con el codigo. Por favor, inténtalo de nuevo.");
         }
         setIsLoading(false);
@@ -121,7 +136,7 @@ export default function EmailVerifier({studyId, handleSubmit}: EmailVerifierProp
                     <button
                     className="bg-black text-white px-6 py-2 rounded-lg font-semibold cursor-pointer
                             hover:bg-gray-800 transition-all duration-200 mx-auto block"
-                    onClick={handleConfirmCode}
+                    onClick={handleSubmit}
                     type="submit"
                     >
                     Confirmar

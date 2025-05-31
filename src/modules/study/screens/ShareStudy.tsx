@@ -6,7 +6,6 @@ import type { StudyInfoShare } from "../../../types/StudyInfoShare";
 import type { TaskShare } from "../../../types/TaskShare";
 import SelectComponent from "../components/SelectComponent";
 import type { Response } from "../../../types/Response";
-import { ReqSaveResponses } from "../services/ReqSaveResponses";
 import CircularProgress from '@mui/material/CircularProgress';
 import "../../../animations/fadeInLeft.css";
 import EmailVerifier from "../components/EmailVerifier";
@@ -64,20 +63,6 @@ export default function ShareStudy() {
             setCurrentPage(currentPage + 1);
             setCurrentTask(study.tasks[currentPage + 1]);
             console.log(responses);
-        }
-    }
-
-    async function handleSubmit(e:React.FormEvent) {
-        e.preventDefault();
-        setIsSelected(false)
-        const newResponses = [...responses, { taskId: currentTask.id, path: selectedPath }];
-        setResponses(newResponses);
-
-        const res = await ReqSaveResponses(newResponses);
-        if(res){
-            return true;
-        }else{
-            return false;
         }
     }
 
@@ -160,14 +145,17 @@ export default function ShareStudy() {
                             </button>
                         </div>
                     ):(
-                        <form
+                        <div
                         className="w-full fadeInLeft h-full"
-                        onSubmit={handleSubmit}
                         >
                             {isFinished ? (
                                 <EmailVerifier
                                 studyId={`${studyId}`}
-                                handleSubmit={handleSubmit}
+                                setIsSelected={setIsSelected}
+                                selectedPath={selectedPath}
+                                responses={responses}
+                                setResponses={setResponses}
+                                currentTask={currentTask}
                                 />
                             ):(
                                 <>
@@ -220,7 +208,7 @@ export default function ShareStudy() {
                                 </>
                             )}
                             
-                        </form>
+                        </div>
                     )}
                 </section>
                 

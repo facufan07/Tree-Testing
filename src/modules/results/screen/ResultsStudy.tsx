@@ -11,6 +11,7 @@ import type { StudyInfoResult } from "../../../types/StudyInfoResult";
 import SuccessRate from "../components/SuccessRate";
 import CircularProgress from '@mui/material/CircularProgress';
 import "../../../animations/fadeInLeft.css";
+import TotalSuccess from "../components/TotalSuccess";
 
 
 export default function ResultsStudy() {
@@ -183,6 +184,9 @@ export default function ResultsStudy() {
                             </Table>
                         </TableContainer>
                     </div>
+                    <TotalSuccess
+                    tasks={study.tasks}
+                    />
                 </section>
                 
             </main>

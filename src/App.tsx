@@ -4,7 +4,7 @@ import Home from './modules/home/screens/Home';
 import CreateStudy from './modules/study/screens/CreateStudy';
 import StudyCreated from './modules/study/screens/StudyCreated';
 import ShareStudy from './modules/study/screens/ShareStudy';
-import ResultsStudy from './modules/study/screens/ResultsStudy';
+import ResultsStudy from './modules/results/screen/ResultsStudy';
 
 function App() {
   
